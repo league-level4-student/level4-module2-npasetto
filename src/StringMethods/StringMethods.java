@@ -32,13 +32,19 @@ public class StringMethods {
 
 	// Given Strings s1 and s2, return the longer String
 	public static String longerString(String s1, String s2) {
-		return null;
+		if(s1.length()>s2.length()) {
+			return s1;
+		}
+		return s2;
 	}
 
 	
 	// if String s contains the word "underscores", change all of the spaces to underscores
 	public static String formatSpaces(String s) {
-		return null;
+		if(s.contains("underscores")) {
+			s=s.replaceAll(" ", "_");
+		}
+		return s;
 	}
 
 	
@@ -46,36 +52,74 @@ public class StringMethods {
 	// You cannot assume there are no extra spaces around the name, but you can
 	// assume there is only one space between the first and last name
 	public static String lineLeader(String s1, String s2, String s3) {
-		return null;
+		s1=s1.trim();
+		s2=s2.trim();
+		s3=s3.trim();
+		String last1=s1.split(" ")[1];
+		String last2=s2.split(" ")[1];
+		String last3=s3.split(" ")[1];
+		String currentString;
+		if(last1.compareToIgnoreCase(last2)<0) {
+			currentString=last1;
+		}else {
+			currentString=last2;
+		}
+		if(currentString.compareToIgnoreCase(last3)>0) {
+			currentString=last3;
+		}
+		if(currentString.equals(last1)) {
+			return s1;
+		}else if(currentString.equals(last2)) {
+			return s2;
+		}
+		return s3;
 	}
 	
 	
 	// Return the sum of all numerical digits in the String
 	public static int numeralSum(String s) {
-		return 0;
+		int num=0;
+		for (int i = 0; i < s.length(); i++) {
+			if(Character.isDigit(s.charAt(i))) {
+				num+=Character.getNumericValue(s.charAt(i));
+			}
+		}
+		return num;
 	}
 	
 	
 	// Return the number of times String substring appears in String s
 	public static int substringCount(String s, String substring) {
-		return 0;
+		int count=0;
+		while(s.indexOf(substring)!=-1) {
+			s=s.substring(s.indexOf(substring)+substring.length());
+			count++;
+		}
+		return count;
 	}
 
 	// Call Utitilities.encrypt to encrypt String s
 	public static String encrypt(String s, char key) {
-		return null;
+		return Utilities.encrypt(s.getBytes(), (byte) key);
 	}
 
 	// Call Utilities.decrypt to decrypt the cyphertext
 	public static String decrypt(String s, char key) {
-		return null;
+		return Utilities.decrypt(s, (byte) key);
 	}
 
 
 	// Return the number of words in String s that end with String substring
 	// You can assume there are no punctuation marks between words
 	public static int wordsEndsWithSubstring(String s, String substring) {
-		return 0;
+		String[] words=s.split(" ");
+		int count=0;
+		for (int i = 0; i < words.length; i++) {
+			if(words[i].endsWith(substring)) {
+				count++;
+			}
+		}
+		return count;
 	}
 	
 
@@ -83,15 +127,28 @@ public class StringMethods {
 	// of String substring and the final occurrence
 	// You can assume that substring will appear at least twice
 	public static int distance(String s, String substring) {
-		return 0;
+		return s.lastIndexOf(substring)-s.indexOf(substring)-substring.length();
 	}
+	
 
 
 	// Return true if String s is a palindrome
 	// palindromes are words or phrases are read the same forward as backward.
 	// HINT: ignore/remove all punctuation and spaces in the String
 	public static boolean palindrome(String s) {
-		return true;
+		String[] words=s.split("[\\W| ]");
+		String stuff="";
+		for (int i = 0; i < words.length; i++) {
+			stuff+=words[i];
+		}
+		String stuffReverse="";
+		for (int i = stuff.length()-1; i >= 0; i--) {
+			stuffReverse+=stuff.charAt(i);
+		}
+		if(stuffReverse.equalsIgnoreCase(stuff)) {
+			return true;
+		}
+		return false;
 	}
 	
 }
